@@ -1,5 +1,4 @@
 use MyDb;
-#请在以下空白处填写适当的诘句，实现编程要求。
 #(1) 为表Staff添加主码
 alter table Staff add primary key(staffNo);
 #(2) Dept.mgrStaffNo是外码，对应的主码是Staff.staffNo,请添加这个外码，名字为FK_Dept_mgrStaffNo:
