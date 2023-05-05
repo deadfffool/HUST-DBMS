@@ -19,6 +19,3 @@ from property
 where pro_type = 3
 group by pro_c_id
 order by total_revenue desc, pro_c_id; 
-
-
-/*  end  of  your code  */

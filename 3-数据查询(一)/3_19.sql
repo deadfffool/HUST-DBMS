@@ -4,8 +4,6 @@
 --               2    
 --               3
 --               4
---   请用一条SQL语句实现该查询：
-
 select week_of_trading, 
 sum(if(id = 0, amount, null)) as Monday,
 sum(if(id = 1, amount, null)) as Tuesday,
@@ -19,10 +17,3 @@ from property, fund
 where pro_pif_id = f_id and pro_purchase_time like "2022-02-%" and pro_type = 3
 group by pro_purchase_time) as weektable
 group by week_of_trading;
-
-
-
-
-
-
-/*  end  of  your code  */

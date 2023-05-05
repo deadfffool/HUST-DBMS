@@ -3,14 +3,12 @@
 --     列出所有客户的编号、名称和总资产，总资产命名为total_property。
 --     总资产为储蓄卡余额，投资总额，投资总收益的和，再扣除信用卡透支的金额
 --     (信用卡余额即为透支金额)。客户总资产包括被冻结的资产。
---    请用一条SQL语句实现该查询：
-
 select c_id, c_name, sum(amount)  as total_property
 from
     (select c_name, c_id_card, c_id, (sum(p_amount * pro_quantity) + sum(pro_income)) as amount
     from client, finances_product, property
     where
-        pro_pif_id = p_id and pro_c_id = c_id and pro_type = 1
+    pro_pif_id = p_id and pro_c_id = c_id and pro_type = 1
     group by c_id
 
     union
@@ -28,33 +26,28 @@ from
     group by c_id
     
     union 
-    select c_name, c_id_card, c_id, 0
-    from client left outer join property on (c_id = pro_c_id)
-    where
-    pro_c_id is NULL
+    select c_name,c_id_card,c_id,0 as amount
+    from client
+    where not exists(
+        select *
+        from property
+        where client.c_id = property.pro_c_id
+    )
 
     union
     select c_name, c_id_card, c_id, sum(b_balance) as amount
     from client, bank_card
     where 
-        b_c_id = c_id and b_type = '储蓄卡'
+    b_c_id = c_id and b_type = '储蓄卡'
     group by c_id
     
     union
     select c_name, c_id_card, c_id, -sum(b_balance) as amount
     from client, bank_card
     where 
-        b_c_id = c_id and b_type = '信用卡'
+    b_c_id = c_id and b_type = '信用卡'
     group by c_id
 
     )as amount_all(c_name, c_id_card, c_id, amount)
 group by c_id, c_id_card, c_name
 order by c_id;
-
-
-
-
-
-
-
-/*  end  of  your code  */ 
