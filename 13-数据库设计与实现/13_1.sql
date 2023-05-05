@@ -1,6 +1,3 @@
- # 请将你实现flight_booking数据库的语句写在下方：
-
-
 create database flight_booking;
 use flight_booking;
 
