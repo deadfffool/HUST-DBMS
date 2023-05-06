@@ -42,7 +42,6 @@ public class ChangePass {
                     return 3;
             } else
                 return 2;
-            
         } catch (SQLException e) {
             e.printStackTrace();
         }

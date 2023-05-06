@@ -14,8 +14,9 @@ public class RemoveCard {
      * @param c_number 银行卡号
      */
     public static int removeBankCard(Connection connection,
-                                   int b_c_id, String b_number){
-     String sql = "delete from bank_card where b_c_id = ? and b_number = ?";
+                                   int b_c_id, String b_number)
+    {
+        String sql = "delete from bank_card where b_c_id = ? and b_number = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, b_c_id);

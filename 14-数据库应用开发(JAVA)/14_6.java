@@ -46,7 +46,6 @@ public class Transfer {
         }
         return false;
     }
-
     // 不要修改main() 
     public static void main(String[] args) throws Exception {
 

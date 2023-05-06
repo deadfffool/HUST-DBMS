@@ -5,9 +5,8 @@ public class Login {
     public static void main(String[] args) {
         Connection connection = null;
         //申明下文中的resultSet, statement
-        Statement statement = null;
         ResultSet resultSet = null;
-
+        PreparedStatement preparedStatement = null;
 
         Scanner input = new Scanner(System.in);
 
@@ -24,17 +23,20 @@ public class Login {
             String url = "jdbc:mysql://127.0.0.1:3306/finance?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=UTC";
             connection = DriverManager.getConnection(url, userName, passWord);
             // 补充实现代码:
-            statement = connection.createStatement();
             String sql = "select * from client where c_mail = ? and c_password = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, loginName);
-            ps.setString(2, loginPass);
-            resultSet = ps.executeQuery();
-            if (resultSet.next())
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,loginName);
+            preparedStatement.setString(2,loginPass);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next())
+            {
                 System.out.println("登录成功。");
+            }
             else
+            {
                 System.out.println("用户名或密码错误！");
-         } catch (ClassNotFoundException e) {
+            }
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -43,8 +45,8 @@ public class Login {
                 if (resultSet != null) {
                     resultSet.close();
                 }
-                if (statement != null) {
-                    statement.close();
+                if (preparedStatement != null) {
+                    preparedStatement.close();
                 }
 
                 if (connection != null) {
